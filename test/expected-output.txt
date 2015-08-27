@@ -1,0 +1,1 @@
+.simpless .nested{font:10px}

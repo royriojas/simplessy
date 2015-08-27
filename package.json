@@ -1,0 +1,64 @@
+{
+  "name": "simplessy",
+  "version": "0.0.1",
+  "description": "A transform to require less files and process the result with autoprefixer",
+  "main": "index.js",
+  "scripts": {
+    "beautify": "esbeautifier 'index.js' 'compile-less.js' 'test/**/*.js' 'specs/**/*.js'",
+    "beautify-check": "esbeautifier -k 'index.js' 'compile-less.js' 'test/**/*.js' 'specs/**/*.js'",
+    "eslint": "eslinter 'index.js' 'compile-less.js' 'test/**/*.js' 'specs/**/*.js'",
+    "test": "mocha-runner 'specs/**/*.js'",
+    "cover": "istanbul cover -x 'specs/**/*.js' mocha-runner 'specs/**/*.js' html text-summary",
+    "watch": "watch-spawn -i -p 'specs/**/*.js' -p 'index.js' npm run cover",
+    "lint": "npm run beautify && npm run eslint && npm test",
+    "verify": "npm run beautify-check && npm run eslint && npm test",
+    "install-hooks": "prepush install && changelogx install-hook && precommit install",
+    "changelog": "changelogx -f markdown -o ./changelog.md",
+    "do-changelog": "npm run changelog && git add ./changelog.md && git commit -m 'DOC: Generate changelog' --no-verify",
+    "pre-v": "npm run verify",
+    "post-v": "npm run do-changelog && git push --no-verify && git push --tags --no-verify",
+    "bump-major": "npm run pre-v && npm version major -m 'BLD: Release v%s' && npm run post-v",
+    "bump-minor": "npm run pre-v && npm version minor -m 'BLD: Release v%s' && npm run post-v",
+    "bump-patch": "npm run pre-v && npm version patch -m 'BLD: Release v%s' && npm run post-v",
+    "bundle": "browserify test/index.js -t ./index.js | node"
+  },
+  "keywords": [
+    "browserify-plugin",
+    "browserify plugin",
+    "browserify transform",
+    "lessify",
+    "require .less files"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/royriojas/simplessy"
+  },
+  "license": "MIT",
+  "author": "Roy Riojas (http://royriojas.com)",
+  "prepush": [
+    "npm run verify"
+  ],
+  "precommit": {
+    "tasks": [
+      "npm run verify"
+    ],
+    "onDirtyState": "stash"
+  },
+  "dependencies": {
+    "browserify-transform-tools": "^1.5.0",
+    "browserify-transform-tools-exclude": "^0.1.1",
+    "simpless": "^3.0.13"
+  },
+  "devDependencies": {
+    "browserify": "^11.0.1",
+    "changelogx": "^1.0.18",
+    "esbeautifier": "^4.2.11",
+    "eslinter": "^2.3.3",
+    "istanbul": "^0.3.18",
+    "mocha-runner": "^1.1.1",
+    "precommit": "^1.1.5",
+    "prepush": "^3.1.4",
+    "spawnly": "^1.0.1",
+    "watch-spawn": "^1.0.5"
+  }
+}
