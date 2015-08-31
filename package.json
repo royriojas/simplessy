@@ -7,7 +7,7 @@
     "beautify": "esbeautifier 'index.js' 'compile-less.js' 'test/**/*.js' 'specs/**/*.js'",
     "beautify-check": "esbeautifier -k 'index.js' 'compile-less.js' 'test/**/*.js' 'specs/**/*.js'",
     "eslint": "eslinter 'index.js' 'compile-less.js' 'test/**/*.js' 'specs/**/*.js'",
-    "test": "mocha-runner 'specs/**/*.js'",
+    "test": "mocha-runner -c configs/mocha.json 'specs/**/*.js'",
     "cover": "istanbul cover -x 'specs/**/*.js' mocha-runner 'specs/**/*.js' html text-summary",
     "watch": "watch-spawn -i -p 'specs/**/*.js' -p 'index.js' npm run cover",
     "lint": "npm run beautify && npm run eslint && npm test",
@@ -20,7 +20,8 @@
     "bump-major": "npm run pre-v && npm version major -m 'BLD: Release v%s' && npm run post-v",
     "bump-minor": "npm run pre-v && npm version minor -m 'BLD: Release v%s' && npm run post-v",
     "bump-patch": "npm run pre-v && npm version patch -m 'BLD: Release v%s' && npm run post-v",
-    "bundle": "browserify test/index.js -t ./index.js | node"
+    "bundle": "browserify test/index.js -t ./index.js | node",
+    "bundle:modules": "browserify test/index.js -t [./index.js --tokens=true] | node"
   },
   "keywords": [
     "browserify-plugin",
@@ -47,7 +48,11 @@
   "dependencies": {
     "browserify-transform-tools": "^1.5.0",
     "browserify-transform-tools-exclude": "^0.1.1",
-    "simpless": "^3.0.13"
+    "css-modules-loader-core": "https://github.com/royriojas/css-modules-loader-core/tarball/load-from-source",
+    "es6-promise": "^3.0.2",
+    "extend": "^3.0.0",
+    "simpless": "^3.0.13",
+    "string-hash": "^1.1.0"
   },
   "devDependencies": {
     "browserify": "^11.0.1",
