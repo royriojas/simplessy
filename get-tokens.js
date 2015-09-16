@@ -3,31 +3,27 @@ var Core = require( 'css-modules-loader-core' );
 var FileSystemLoader = require( 'css-modules-loader-core/lib/file-system-loader' );
 var extend = require( 'extend' );
 var stringHash = require( 'string-hash' );
-var path = require('path');
+var path = require( 'path' );
 /*
   Custom `generateScopedName` function for `postcss-modules-scope`.
   Appends a hash of the css source.
 */
 function createScopedNameFunc( plugin ) {
   var orig = plugin.generateScopedName;
-  return function ( name, path, css ) {
-    var hash = stringHash( css ).toString( 36 ).substr( 0, 5 );
-    return orig.apply( plugin, arguments ) + '___' + hash;
-  }
+
+  return function ( name, _path, css ) {
+    return 'c_' + stringHash( css ).toString( 36 ).substr( 0, 5 ) + '_' + stringHash( orig.apply( plugin, arguments ) ) + '_' + name; //+ '___' + hash;
+  };
 }
 
 // keep track of all tokens so we can avoid duplicates
-var tokensByFile = {};
-
+var tokensByFile = { };
 
 module.exports = function ( css, filename, opts ) {
-  options = opts || {};
-  var parseTokens = options.tokens;
+  var options = opts || { };
+  var parseTokens = options.tokens || !!filename.match( /\.m\.less$/ );
   if ( !parseTokens ) {
-    return ES6Promise.resolve( {
-      finalSource: css,
-      tokens: {}
-    } );
+    return ES6Promise.resolve( { finalSource: css, tokens: {} } );
   }
 
   var rootDir = options.rootDir || options.d || '/';
@@ -36,11 +32,19 @@ module.exports = function ( css, filename, opts ) {
   var plugins = options.use || options.u;
   if ( !plugins ) {
     plugins = Core.defaultPlugins;
+
+    var pmodulesScope = plugins.filter( function ( plugin ) {
+      return plugin.postcss.postcssPlugin === 'postcss-modules-scope';
+    } );
+
+    if ( pmodulesScope.length > 0 ) {
+      pmodulesScope = pmodulesScope[ 0 ];
+      pmodulesScope.generateScopedName = createScopedNameFunc( pmodulesScope );
+    }
+
   } else {
     if ( typeof plugins === 'string' ) {
-      plugins = [
-        plugins
-      ];
+      plugins = [ plugins ];
     }
 
     plugins = plugins.map( function requirePlugin( name ) {
@@ -53,7 +57,8 @@ module.exports = function ( css, filename, opts ) {
 
       // custom scoped name generation
       if ( name === 'postcss-modules-scope' ) {
-        options[ name ] = options[ name ] || {};
+
+        options[ name ] = options[ name ] || { };
         if ( !options[ name ].generateScopedName ) {
           options[ name ].generateScopedName = createScopedNameFunc( plugin );
         }
@@ -81,10 +86,7 @@ module.exports = function ( css, filename, opts ) {
 
       extend( tokensByFile, loader.tokensByFile );
 
-      resolve( {
-        finalSource: loader.finalSource,
-        tokens: tokens
-      } );
+      resolve( { finalSource: loader.finalSource, tokens: tokens } );
 
     }, reject );
   } );

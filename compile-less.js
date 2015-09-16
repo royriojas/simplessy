@@ -51,15 +51,24 @@ module.exports = function ( args, done ) {
         // the output of the transform
         // so tokens inside this function, refer to the tokens
         // variable declared in the transformed code
-        var fn = function _getToken( klass ) {
+        var fn = function _getToken( /*klass, klass1, klass2*/ ) {
+
           if ( !tokens ) {
             throw new Error( 'no tokens found' );
           }
-          var token = tokens[ klass ];
-          if ( !token ) {
-            throw new Error( 'no token found for ' + klass );
-          }
-          return token;
+
+          var _args = [ ].slice.call( arguments ).join( ' ' ).split( ' ' );
+
+          var _result = _args.map( function ( klass ) {
+
+            var token = tokens[ klass ];
+            if ( !token ) {
+              throw new Error( 'no token found for ' + klass );
+            }
+            return token;
+          } ).join( ' ' );
+
+          return _result;
         };
 
         compiled = 'var css = "' + compiled.replace( /\\/g, '\\\\' ).replace( /'/g, '\\$&' ).replace( /"/g, '\\$&' ) + '";';

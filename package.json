@@ -6,7 +6,7 @@
   "scripts": {
     "beautify": "esbeautifier 'index.js' 'compile-less.js' 'test/**/*.js' 'specs/**/*.js'",
     "beautify-check": "esbeautifier -k 'index.js' 'compile-less.js' 'test/**/*.js' 'specs/**/*.js'",
-    "eslint": "eslinter 'index.js' 'compile-less.js' 'test/**/*.js' 'specs/**/*.js'",
+    "eslint": "eslinter 'index.js' 'compile-less.js' 'get-tokens.js' 'test/**/*.js' 'specs/**/*.js'",
     "test": "mocha-runner -c configs/mocha.json 'specs/**/*.js'",
     "cover": "istanbul cover -x 'specs/**/*.js' mocha-runner 'specs/**/*.js' html text-summary",
     "watch": "watch-spawn -i -p 'specs/**/*.js' -p 'index.js' npm run cover",
@@ -21,7 +21,7 @@
     "bump-minor": "npm run pre-v && npm version minor -m 'BLD: Release v%s' && npm run post-v",
     "bump-patch": "npm run pre-v && npm version patch -m 'BLD: Release v%s' && npm run post-v",
     "bundle": "browserify test/index.js -t ./index.js | node",
-    "bundle:modules": "browserify test/index.js -t [./index.js --tokens=true] | node"
+    "bundle:modules": "browserify test/indexm.js -t [./index.js ] | node"
   },
   "keywords": [
     "browserify-plugin",

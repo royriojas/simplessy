@@ -4,7 +4,8 @@ var compileLess = require( './compile-less' );
 var options = {
   includeExtensions: [
     '.css',
-    '.less'
+    '.less',
+    '.lessm'
   ]
 };
 var transformExclude = require( 'browserify-transform-tools-exclude' );
