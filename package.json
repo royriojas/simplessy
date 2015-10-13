@@ -52,7 +52,8 @@
     "es6-promise": "^3.0.2",
     "extend": "^3.0.0",
     "simpless": "^3.0.13",
-    "string-hash": "^1.1.0"
+    "string-hash": "^1.1.0",
+    "ud": "^2.0.2"
   },
   "devDependencies": {
     "browserify": "^11.0.1",
