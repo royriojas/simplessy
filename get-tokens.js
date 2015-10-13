@@ -1,7 +1,7 @@
 var ES6Promise = require( 'es6-promise' ).Promise;
 var Core = require( 'css-modules-loader-core' );
 var FileSystemLoader = require( 'css-modules-loader-core/lib/file-system-loader' );
-var extend = require( 'extend' );
+//var extend = require( 'extend' );
 var stringHash = require( 'string-hash' );
 var path = require( 'path' );
 /*
@@ -15,9 +15,6 @@ function createScopedNameFunc( plugin ) {
     return 'c_' + stringHash( css ).toString( 36 ).substr( 0, 5 ) + '_' + stringHash( orig.apply( plugin, arguments ) ) + '_' + name; //+ '___' + hash;
   };
 }
-
-// keep track of all tokens so we can avoid duplicates
-var tokensByFile = { };
 
 module.exports = function ( css, filename, opts ) {
   var options = opts || { };
@@ -78,16 +75,14 @@ module.exports = function ( css, filename, opts ) {
 
     var loader = new FileSystemLoader( rootDir, plugins );
 
-    loader.tokensByFile = tokensByFile;
-
     var fPath = path.relative( rootDir, filename );
 
     loader.fetch( fPath, '/', null, css ).then( function ( tokens ) {
 
-      extend( tokensByFile, loader.tokensByFile );
-
       resolve( { finalSource: loader.finalSource, tokens: tokens } );
 
-    }, reject );
+    }, reject ).catch(function (err) {
+      console.error(err);
+    });
   } );
 };

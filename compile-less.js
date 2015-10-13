@@ -22,6 +22,8 @@ module.exports = function ( args, done ) {
       }
     } ).then( function ( compiled ) {
 
+      compiled = compiled.replace( /\\/g, '\\\\' ).replace( /'/g, '\\$&' ).replace( /"/g, '\\$&' );
+
       getTokens( compiled, file, config ).then( function ( response ) {
         var tokens = response.tokens;
         compiled = response.finalSource;
@@ -71,7 +73,7 @@ module.exports = function ( args, done ) {
           return _result;
         };
 
-        compiled = 'var css = "' + compiled.replace( /\\/g, '\\\\' ).replace( /'/g, '\\$&' ).replace( /"/g, '\\$&' ) + '";';
+        compiled = 'var css = "' + compiled + '";';
         compiled += '\n\nvar hash = "' + hash + '";';
         compiled += '\n\nvar doRender = function () { (' + renderCSS.toString() + ')(css, hash) };';
         compiled += '\n\nvar tokens = ' + JSON.stringify( tokens );
