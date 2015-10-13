@@ -1,5 +1,10 @@
 
 # simplessy - Changelog
+## v1.0.0
+- **Bug Fixes**
+  - make css modules be live reloadeable - [bccf212]( https://github.com/royriojas/simplessy/commit/bccf212 ), [royriojas](https://github.com/royriojas), 13/10/2015 00:20:29
+
+    
 ## v0.1.4
 - **Bug Fixes**
   - make classNames predictable so they can be used in watch mode - [2d70382]( https://github.com/royriojas/simplessy/commit/2d70382 ), [royriojas](https://github.com/royriojas), 12/10/2015 23:43:34
