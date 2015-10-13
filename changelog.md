@@ -1,5 +1,10 @@
 
 # simplessy - Changelog
+## v0.1.3
+- **Bug Fixes**
+  - make sure files are always parsed - [64229a8]( https://github.com/royriojas/simplessy/commit/64229a8 ), [royriojas](https://github.com/royriojas), 12/10/2015 21:40:40
+
+    
 ## v0.1.2
 - **Enhancements**
   - files that ends in `.m.less` are parsed as css modules files that support less - [3846304]( https://github.com/royriojas/simplessy/commit/3846304 ), [royriojas](https://github.com/royriojas), 15/09/2015 20:27:43
