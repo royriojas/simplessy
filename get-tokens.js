@@ -8,11 +8,9 @@ var path = require( 'path' );
   Custom `generateScopedName` function for `postcss-modules-scope`.
   Appends a hash of the css source.
 */
-function createScopedNameFunc( plugin ) {
-  var orig = plugin.generateScopedName;
-
-  return function ( name, _path, css ) {
-    return 'c_' + stringHash( css ).toString( 36 ).substr( 0, 5 ) + '_' + stringHash( orig.apply( plugin, arguments ) ) + '_' + name; //+ '___' + hash;
+function createScopedNameFunc() {
+  return function ( name, _path ) {
+    return 'c_' + stringHash( _path ).toString( 36 ).substr( 0, 7 ) + '_' + name;
   };
 }
 
@@ -20,7 +18,9 @@ module.exports = function ( css, filename, opts ) {
   var options = opts || { };
   var parseTokens = options.tokens || !!filename.match( /\.m\.less$/ );
   if ( !parseTokens ) {
-    return ES6Promise.resolve( { finalSource: css, tokens: {} } );
+    return ES6Promise.resolve( {
+      finalSource: css, tokens: {}
+    } );
   }
 
   var rootDir = options.rootDir || options.d || '/';
@@ -81,8 +81,8 @@ module.exports = function ( css, filename, opts ) {
 
       resolve( { finalSource: loader.finalSource, tokens: tokens } );
 
-    }, reject ).catch(function (err) {
-      console.error(err);
-    });
+    }, reject ).catch( function ( err ) {
+      console.error( err );
+    } );
   } );
 };
