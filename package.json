@@ -1,6 +1,6 @@
 {
   "name": "simplessy",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "description": "A transform to require less files and process the result with autoprefixer",
   "main": "index.js",
   "scripts": {
