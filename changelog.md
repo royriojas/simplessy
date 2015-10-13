@@ -1,5 +1,10 @@
 
 # simplessy - Changelog
+## v0.1.4
+- **Bug Fixes**
+  - make classNames predictable so they can be used in watch mode - [2d70382]( https://github.com/royriojas/simplessy/commit/2d70382 ), [royriojas](https://github.com/royriojas), 12/10/2015 23:43:34
+
+    
 ## v0.1.3
 - **Bug Fixes**
   - make sure files are always parsed - [64229a8]( https://github.com/royriojas/simplessy/commit/64229a8 ), [royriojas](https://github.com/royriojas), 12/10/2015 21:40:40
