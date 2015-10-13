@@ -4,9 +4,9 @@
   "description": "A transform to require less files and process the result with autoprefixer",
   "main": "index.js",
   "scripts": {
-    "beautify": "esbeautifier 'index.js' 'compile-less.js' 'get-tokens.js' 'test/**/*.js' 'specs/**/*.js'",
+    "beautify": "esbeautifier 'index.js' 'ud.js' 'compile-less.js' 'get-tokens.js' 'test/**/*.js' 'specs/**/*.js'",
     "beautify-check": "npm run beautify -- -k",
-    "eslint": "eslinter 'index.js' 'compile-less.js' 'get-tokens.js' 'test/**/*.js' 'specs/**/*.js'",
+    "eslint": "eslinter 'index.js' 'compile-less.js' 'ud.js' 'get-tokens.js' 'test/**/*.js' 'specs/**/*.js'",
     "test": "mocha-runner -c configs/mocha.json 'specs/**/*.js'",
     "cover": "istanbul cover -x 'specs/**/*.js' mocha-runner 'specs/**/*.js' html text-summary",
     "watch": "watch-spawn -i -p 'specs/**/*.js' -p 'index.js' npm run cover",

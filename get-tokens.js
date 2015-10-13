@@ -16,7 +16,7 @@ function createScopedNameFunc() {
 
 module.exports = function ( css, filename, opts ) {
   var options = opts || { };
-  var parseTokens = options.tokens || !!filename.match( /\.m\.less$/ );
+  var parseTokens = options.tokens;
   if ( !parseTokens ) {
     return ES6Promise.resolve( {
       finalSource: css, tokens: {}

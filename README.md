@@ -42,7 +42,15 @@ Then in your code
 ```javascript
 // this will inject a <style> block to the head containing the styles
 require('./some-less-file.less');
-// TODO: make it return a list of styles like css-modulesify
+
+// this will inject a <style> block to the head containing the styles parsed like css-modulesify
+// if the file ends in `m.less` it is supposed to contain css local by default
+var styles = require('./some-less.file.m.less');
+
+// then styles.t('some-class') // will retrieve the generated className for the provided className
+// it will automatically register this module as a hot module to be reloaded by browserify-hmr
+// make sure to include envify and set the NODE_ENV=development to do this only in dev mode
+// check envify for more info about this
 ```
 
 ## License

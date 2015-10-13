@@ -1,5 +1,5 @@
 module.exports = function ( args, done ) {
-
+  var path = require( 'path' );
   var file = args.file;
   var stream = args.stream;
   var config = args.config;
@@ -9,7 +9,7 @@ module.exports = function ( args, done ) {
   var getTokens = require( './get-tokens' );
   var stringHash = require( 'string-hash' );
 
-  var hash = 'style_' + stringHash( file ).toString( 36 ).substr( 0, 5 );
+  var hash = 'style_' + stringHash( file ).toString( 36 ).substr( 0, 7 );
 
   compileLess( file, { compress: true } ).then( function ( result ) {
     return autoPrefix( result.css, {
@@ -23,6 +23,8 @@ module.exports = function ( args, done ) {
     } ).then( function ( compiled ) {
 
       compiled = compiled.replace( /\\/g, '\\\\' ).replace( /'/g, '\\$&' ).replace( /"/g, '\\$&' );
+
+      config.tokens = config.tokens || !!file.match( /\.m\.less$/ );
 
       getTokens( compiled, file, config ).then( function ( response ) {
         var tokens = response.tokens;
@@ -80,6 +82,11 @@ module.exports = function ( args, done ) {
         compiled += '\n\nvar fn = ' + fn.toString();
         compiled += '\n\ndoRender();';
         compiled += '\n\n' + 'module.exports = { css: css, tokens: tokens, t: fn, render: function () { doRender(); }}\n\n';
+
+        if ( config.tokens ) {
+          var pathToFile = path.relative( path.dirname( file ), path.resolve( __dirname, './ud' ) );
+          compiled += 'if (process.env.NODE_ENV === "development") { try { var ud = require("' + pathToFile + '"); ud.defn(module, function () { doRender(); }); } catch(ex) { console.error(ex); } }\n\n';
+        }
 
         var imports = result.imports || [ ];
 
