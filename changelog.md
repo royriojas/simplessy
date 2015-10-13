@@ -1,5 +1,10 @@
 
 # simplessy - Changelog
+## v1.0.1
+- **Bug Fixes**
+  - missing dependency `ud` - [1660bcd]( https://github.com/royriojas/simplessy/commit/1660bcd ), [royriojas](https://github.com/royriojas), 13/10/2015 01:04:58
+
+    
 ## v1.0.0
 - **Bug Fixes**
   - make css modules be live reloadeable - [bccf212]( https://github.com/royriojas/simplessy/commit/bccf212 ), [royriojas](https://github.com/royriojas), 13/10/2015 00:20:29
