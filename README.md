@@ -22,7 +22,17 @@ var simplessy = require('simplessy');
 // regular way to include it
 b.transform(simplessy);
 // make it global
-b.transform({ global: true}, simplessy);
+b.transform( simplessy, { global: true });
+
+// pass config
+b.transform( simplessy, {
+  global: true,
+  config : {
+    appliesTo: {
+      regex: /some_module/ // will only apply if the file matches this regex
+    }
+  }
+});
 ```
 
 or in the `package.json` file

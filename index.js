@@ -15,9 +15,8 @@ module.exports = function ( fileName, opts ) {
   var fnTransform = transformExclude( function ( content, transformOptions, done ) {
     var file = transformOptions.file;
     try {
-      //compileLess( content, file, stream, done );
       compileLess( {
-        conent: content,
+        content: content,
         file: file,
         stream: stream,
         config: transformOptions.config
@@ -29,7 +28,12 @@ module.exports = function ( fileName, opts ) {
 
     done( null, content );
   } );
-  var fn = transformTools.makeStringTransform( 'simplessy', options, fnTransform );
+
+  opts = opts || { };
+
+  var fn = transformTools.makeStringTransform( 'simplessy', options, fnTransform ).configure( opts.config );
+
   stream = fn( fileName, opts );
+
   return stream;
 };
