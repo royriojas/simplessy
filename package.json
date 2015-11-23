@@ -51,15 +51,15 @@
     "css-modules-loader-core": "https://github.com/royriojas/css-modules-loader-core/tarball/do-not-cache-tokens",
     "es6-promise": "^3.0.2",
     "extend": "^3.0.0",
-    "simpless": "^3.0.13",
+    "simpless": "^3.0.16",
     "string-hash": "^1.1.0",
     "ud": "^2.0.2"
   },
   "devDependencies": {
     "browserify": "^11.0.1",
     "changelogx": "^1.0.18",
-    "esbeautifier": "^4.2.11",
-    "eslinter": "^2.3.3",
+    "esbeautifier": "^8.0.2",
+    "eslinter": "^3.2.1",
     "istanbul": "^0.3.18",
     "mocha-runner": "^1.1.1",
     "precommit": "^1.1.5",

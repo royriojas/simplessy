@@ -10,6 +10,9 @@ var path = require( 'path' );
 */
 function createScopedNameFunc() {
   return function ( name, _path ) {
+    if ( name.match( /^__global__/ ) ) {
+      return name.replace( /^__global__/, '' );
+    }
     return 'c_' + stringHash( _path ).toString( 36 ).substr( 0, 7 ) + '_' + name;
   };
 }
@@ -19,7 +22,8 @@ module.exports = function ( css, filename, opts ) {
   var parseTokens = options.tokens;
   if ( !parseTokens ) {
     return ES6Promise.resolve( {
-      finalSource: css, tokens: {}
+      finalSource: css,
+      tokens: {}
     } );
   }
 

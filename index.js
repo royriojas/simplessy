@@ -14,19 +14,18 @@ module.exports = function ( fileName, opts ) {
   var stream;
   var fnTransform = transformExclude( function ( content, transformOptions, done ) {
     var file = transformOptions.file;
-    try {
-      compileLess( {
-        content: content,
-        file: file,
-        stream: stream,
-        config: transformOptions.config
-      }, done );
-      return;
-    } catch (ex) {
-      done( ex );
-    }
 
-    done( null, content );
+    compileLess( {
+      content: content,
+      file: file,
+      stream: stream,
+      config: transformOptions.config
+    } ).then( function ( result ) {
+      done( null, result );
+    } ).catch( function ( err ) {
+      done( err );
+    } );
+
   } );
 
   opts = opts || { };

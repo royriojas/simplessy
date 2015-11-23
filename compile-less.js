@@ -1,4 +1,4 @@
-module.exports = function ( args, done ) {
+module.exports = function ( args ) {
   var path = require( 'path' );
   var file = args.file;
   var stream = args.stream;
@@ -11,7 +11,7 @@ module.exports = function ( args, done ) {
 
   var hash = 'style_' + stringHash( file ).toString( 36 ).substr( 0, 7 );
 
-  compileLess( file, { compress: true } ).then( function ( result ) {
+  return compileLess( file, { compress: true, content: args.content } ).then( function ( result ) {
     return autoPrefix( result.css, {
       file: file,
       dest: '',
@@ -26,7 +26,7 @@ module.exports = function ( args, done ) {
 
       config.tokens = config.tokens || !!file.match( /\.m\.less$/ );
 
-      getTokens( compiled, file, config ).then( function ( response ) {
+      return getTokens( compiled, file, config ).then( function ( response ) {
         var tokens = response.tokens;
         compiled = response.finalSource;
 
@@ -94,10 +94,8 @@ module.exports = function ( args, done ) {
           stream.emit( 'file', _file );
         } );
 
-        done( null, compiled );
+        return compiled;
       } );
     } );
-  }, function ( err ) {
-    done( err );
   } );
 };
