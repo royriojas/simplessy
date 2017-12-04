@@ -21,7 +21,9 @@
     "bump-minor": "npm run pre-v && npm version minor -m 'BLD: Release v%s' && npm run post-v",
     "bump-patch": "npm run pre-v && npm version patch -m 'BLD: Release v%s' && npm run post-v",
     "bundle": "browserify test/index.js -t ./index.js | node",
-    "bundle:modules": "browserify test/indexm.js -t [./index.js ] | node"
+    "bundle:modules": "browserify test/indexm.js -t [./index.js ] | node",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "keywords": [
     "browserify-plugin",
@@ -53,7 +55,8 @@
     "extend": "^3.0.0",
     "simpless": "^3.0.16",
     "string-hash": "^1.1.0",
-    "ud": "^2.0.2"
+    "ud": "^2.0.2",
+    "snyk": "^1.53.0"
   },
   "devDependencies": {
     "browserify": "^11.0.1",
@@ -66,5 +69,6 @@
     "prepush": "^3.1.4",
     "spawnly": "^1.0.1",
     "watch-spawn": "^1.0.5"
-  }
+  },
+  "snyk": true
 }
